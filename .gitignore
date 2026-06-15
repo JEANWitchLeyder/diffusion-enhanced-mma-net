@@ -1,0 +1,12 @@
+venv/
+dataset/
+models/
+demo_output/
+project_evidence/
+*.zip
+*.rar
+*.pth
+*.pth.tar
+__pycache__/
+*.pyc
+.DS_Store
