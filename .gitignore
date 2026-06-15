@@ -10,3 +10,12 @@ project_evidence/
 __pycache__/
 *.pyc
 .DS_Store
+
+evaluation/culane/CMakeFiles/
+evaluation/culane/CMakeCache.txt
+evaluation/culane/Makefile
+evaluation/culane/cmake_install.cmake
+evaluation/culane/culane_evaluator
+evaluation/culane/build/
+*.o
+a.out
