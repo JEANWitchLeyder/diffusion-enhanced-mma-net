@@ -3,9 +3,10 @@ from libs.dataset.transform import TrainTransform, TestTransform
 from libs.utils.logger import Logger, AverageMeter
 from libs.utils.loss import *
 from libs.utils.utility import write_mask, save_checkpoint, adjust_learning_rate, mask_iou
+from libs.enhancement.diffusion_enhancer import cold_diffusion_enhance
 from libs.models.STM import STM
 from libs.models.Att import Att
-
+from libs.refinement.diffusion_refiner import diffusion_refine
 import torch
 import contextlib
 
@@ -132,6 +133,13 @@ def test(testloader, model, Att_model, use_cuda, opt):
                     # em = torch.zeros(1, objs + 1, H, W).to(ps.device)
 
             frames = frames[0]
+
+            frames = cold_diffusion_enhance(
+             frames,
+             steps=5,
+             gamma=0.65,
+             strength=0.35
+             )
             num_objects = objs[0]
             info = infos[0]
 
@@ -235,11 +243,13 @@ def test(testloader, model, Att_model, use_cuda, opt):
             print(info['name']+' frames_num: ' + str(frames_num) + ' Time cost: ' + str(tmp_time))
             print('testing fps: ' + str(1 / (tmp_time / frames_num)))
 
-
+             #Diffusion model Improvement
             pred = torch.cat(pred, dim=0)
             pred = pred.detach().cpu().numpy()
-            write_mask(pred, info, opt, directory=opt.output_dir)
 
+            pred = diffusion_refine(pred, steps=5)
+
+            write_mask(pred, info, opt, directory=opt.output_dir)
         time_sum = 0
         for _, val in enumerate (time_cost):
             time_sum += val / (frames_num)

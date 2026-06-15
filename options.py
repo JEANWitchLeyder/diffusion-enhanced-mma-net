@@ -51,4 +51,4 @@ OPTION.resume_STM = './models/VIL100/60_lr0.001deay1e-6_sgd/STM/recurrent35.pth.
 OPTION.gpu_id = '1'
 OPTION.workers = 1
 OPTION.save_indexed_format = True # set True to save indexed format png file, otherwise segmentation with original image
-OPTION.output_dir = 'output'
+OPTION.output_dir = 'output_diffusion_input'

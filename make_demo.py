@@ -5,7 +5,7 @@ import numpy as np
 seq = "0_Road029_Trim001_frames"
 
 img_dir = f"dataset/VIL100/JPEGImages/{seq}"
-mask_dir = f"dataset/output/VIL100/60_lr0.001deay1e-6_sgd/{seq}"
+mask_dir = f"dataset/output_diffusion_input/VIL100/60_lr0.001deay1e-6_sgd/{seq}"
 out_dir = f"demo_output/{seq}"
 
 os.makedirs(out_dir, exist_ok=True)
@@ -42,7 +42,7 @@ for name in frames:
 
 if video_frames:
     h, w, _ = video_frames[0].shape
-    video_path = f"demo_output/{seq}_demo.mp4"
+    video_path = f"demo_output/{seq}_diffusion_input_demo.mp4"
     writer = cv2.VideoWriter(video_path, cv2.VideoWriter_fourcc(*"mp4v"), 10, (w, h))
 
     for frame in video_frames:
